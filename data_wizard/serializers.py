@@ -25,7 +25,10 @@ class ContentTypeIdField(serializers.RelatedField):
             self.fail('does_not_exist', app_label=app_label, model=model)
 
     def to_representation(self, content_type_id):
-        ct = ContentType.objects.get(pk=content_type_id)
+        if(type(content_type_id) == type(1)):
+            ct = ContentType.objects.get(pk=content_type_id)
+        else:
+            ct = content_type_id
         return '%s.%s' % (ct.app_label, ct.model)
 
 
